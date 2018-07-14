@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/zyxar/socketio/engine"
+
+	"github.com/valyala/fasthttp"
 )
 
 // Server is socket.io server implementation
@@ -187,4 +189,9 @@ func (s *Server) process(sock *socket, p *Packet) {
 			nsp.onError(&nspSock{socket: sock, name: p.Namespace}, ErrUnknownPacket)
 		}
 	}
+}
+
+// HandleFastHTTP implements fasthttp.RequestHandler
+func (s *Server) HandleFastHTTP(ctx *fasthttp.RequestCtx) {
+	s.engine.HandleFastHTTP(ctx)
 }
